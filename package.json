@@ -1,0 +1,10 @@
+{
+  "name": "chromecast-notify",
+  "version": "0.0.1",
+  "dependencies": {
+    "chromecast-player": "^0.2.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "voice-rss-tts": "file:voice-rss-tts"
+  }
+}
