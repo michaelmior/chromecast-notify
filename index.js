@@ -9,6 +9,7 @@ var app = express();
 
 // Endpoint to produce MP3 with the text query string parameter
 app.get('/tts.mp3', function (req, res) {
+	console.log('Playing: ' + req.query.text);
     tts.speech({
         key: process.env.VOICERSS_KEY,
         hl: 'en-us',
@@ -20,6 +21,7 @@ app.get('/tts.mp3', function (req, res) {
         b64: false,
         callback: function (error, content) {
 			if (error) {
+			  console.log(error);
 			  res.status(500).send(error);
 			} else {
               res.send(content);
@@ -31,8 +33,10 @@ app.get('/tts.mp3', function (req, res) {
 // Endpoint which speaks the text query string parameter
 var player = chromecastPlayer();
 app.get('/speak', function(req, res) {
+  var text = req.query.text.trim().replace(/\n/g, ' ');
+  console.log('Requesting notification: ' + text);
   var media = req.protocol + '://' + req.get('host') + '/tts.mp3?text=' +
-              querystring.escape(req.query.text);
+              querystring.escape(text);
   player.launch(media, function(err, p) {
     if (err) {
 	  res.status(500).send('Error playing notification.');
