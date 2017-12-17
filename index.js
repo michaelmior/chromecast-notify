@@ -1,5 +1,6 @@
 var chromecastPlayer = require('chromecast-player');
 var express = require('express');
+var localtunnel = require('localtunnel');
 var querystring = require('querystring');
 var tts = require('voice-rss-tts');
 
@@ -47,4 +48,16 @@ app.get('/speak', function(req, res) {
   });
 });
 
-app.listen(process.env.port || 3000);
+var port = process.env.PORT || 3000
+app.listen(port);
+
+var tunnelOpts = {};
+if (process.env.LT_SUBDOMAIN) {
+  tunnelOpts.subdomain = process.env.LT_SUBDOMAIN;
+}
+var tunnel = localtunnel(port, tunnelOpts, function(err, tunnel) {
+  if (err) {
+    throw err;
+  }
+  console.log('Tunnel started on ' + tunnel.url);
+});

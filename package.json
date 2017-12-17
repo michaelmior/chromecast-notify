@@ -5,6 +5,7 @@
     "chromecast-player": "^0.2.3",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "localtunnel": "^1.8.3",
     "voice-rss-tts": "file:voice-rss-tts"
   }
 }
